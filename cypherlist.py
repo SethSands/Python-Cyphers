@@ -51,11 +51,6 @@ def hypercube(og):
             result+=i
     print(result)    
 
-def LexGunn(og):
-    #I have no idea what this will do, but it came together beatifully;
-    #Lex luthor from James Gunn's Superman and The Lex, a pistol in Warframe
-    pass
-
 def encychoice(og):
     keys={"Rome":caesar,"16":hexcode,"Gambit":chesslock,"4D":hypercube}
     choice=input("Enter key: ").strip()
@@ -64,3 +59,4 @@ def encychoice(og):
     else:
         print("Invalid.")
     
+
