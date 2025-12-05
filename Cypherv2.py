@@ -3,7 +3,7 @@ import keyfile
 
 print("|          Cypherv2.py            |\n"
       "|Encryption method developed by   |\n"
-      "|Sathvik Bhandary                 |\n"
+      "|SethSands.                       |\n"
       "|1 - Encode                       |\n"
       "|2 - Decode                       |\n"
       "|[any other text] - Quit          |\n")
@@ -21,3 +21,4 @@ while True:
         break
         
     
+
