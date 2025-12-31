@@ -7,7 +7,7 @@ print("|          Cypherv2.py            |\n"
       "|1 - Encode                       |\n"
       "|2 - Decode                       |\n"
       "|[any other text] - Quit          |\n")
-print("Current ciphers: Rome ; 16 ; Gambit ; 4D")
+print("Current ciphers: Rome ; b16 ; Gambit ; tesseract ; 3dsect")
 while True:
     z=input("Enter choice of Operation: ")
     if z=="1":
@@ -21,4 +21,5 @@ while True:
         break
         
     
+
 
