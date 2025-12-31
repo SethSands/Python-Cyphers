@@ -2,6 +2,8 @@ def caesar(og):
     alpha="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
     result=""
     n=int(input("Enter shift distance: "))
+    while n>62:
+        n-=62
     for i in range(len(og)):
         result+=alpha[i+n]
     print(result)
@@ -51,12 +53,49 @@ def hypercube(og):
             result+=i
     print(result)    
 
+def octant(og):
+    octant_signs={
+    1:(1,1,1),
+    2:(1,-1,1),
+    3:(-1,-1,1),
+    4:(1,-1,1),
+    5:(1,1,-1),
+    6:(-1,1,-1),
+    7:(-1,-1,-1),
+    8:(1,-1,-1),}
+    alpha="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,?!:'()[]{}-+*/=_@#$%^&;<> "
+    L=len(alpha)
+    O=int(input("Choose octant (1–8): "))
+    if O not in octant_signs:
+        raise ValueError("Invalid octant")
+    shifts=[]
+    for i in range(3):
+        shiftinput=int(input(f"Enter shift {i+1}:"))
+        while shiftinput>90:
+            shiftinput-=90
+        shifts.append(shiftinput)
+    sx,sy,sz=octant_signs[O]
+    signed_shifts=[
+        shifts[0]*sx,
+        shifts[1]*sy,
+        shifts[2]*sz]
+    shift_index=0
+    result=""
+    for ch in og:
+        if ch in alpha:
+            idx=alpha.index(ch)
+            shift=signed_shifts[shift_index%3]
+            result+=alpha[(idx+shift)]
+            shift_index+=1
+    print(result)   
+
 def encychoice(og):
-    keys={"Rome":caesar,"16":hexcode,"Gambit":chesslock,"4D":hypercube}
+    keys={"Rome":caesar,"b16":hexcode,"Gambit":chesslock,"tesseract":hypercube,"3dsect":octant}
     choice=input("Enter key: ").strip()
     if choice in keys:
         return keys[choice](og)
     else:
         print("Invalid.")
     
+
 

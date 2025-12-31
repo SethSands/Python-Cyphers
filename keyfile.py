@@ -1,22 +1,12 @@
-'''keyfile: notes
-    this is the keyfile for decoding encryption
-___________________________________________________________________________________________________________________'''
-
 def caesarkey(og):
     alpha="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
     result=""
     n=int(input("Enter shift distance: "))
+    while n>62:
+        n-=62
     for i in og:
         result+=alpha[alpha.index(i)-n]
     print(result)
-'''
-I think i can diagnose the problem above. set shift to 3, no matter the input it always goes 789ABCDEF...,
-set shift to 5 and you will always get 56789ABCDEF... and it DOES NOT MATTER what input you give for decoding.
-adding n-=2*n to make the index [i+n] didnt work.
-Solved ↓
-changed it completely, now checks every character in input, and replaces it with the index 3 spaces behind,
-or forward when the encode shift was negative (moves it backwards for encryption).
-___________________________________________________________________________________________________________________'''
 
 def hexkey(og):
     wk=og.split(" ")
@@ -31,8 +21,6 @@ def hexkey(og):
         result+=str(i)
     print(result)
     #pass
-'''
-___________________________________________________________________________________________________________________'''
 
 def chesskey(og):
     result=""
@@ -76,12 +64,49 @@ def hcubekey(og):
                 result+=grid[pair]
                 j+=4
     print(result)
+
+def octkey(og):
+    octant_signs={
+    1:(1,1,1),
+    2:(1,-1,1),
+    3:(-1,-1,1),
+    4:(1,-1,1),
+    5:(1,1,-1),
+    6:(-1,1,-1),
+    7:(-1,-1,-1),
+    8:(1,-1,-1),}
+    alpha="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,?!:'()[]{}-+*/=_ "
+    L=len(alpha)
+    O=int(input("Choose octant (1–8): "))
+    if O not in octant_signs:
+        raise ValueError("Invalid octant")
+    shifts=[]
+    for i in range(3):
+        shiftinput=int(input(f"Enter shift {i+1}:"))
+        while shiftinput>90:
+            shiftinput-=90
+        shifts.append(shiftinput)
+    sx,sy,sz=octant_signs[O]
+    signed_shifts=[
+        -1*shifts[0]*sx,
+        -1*shifts[1]*sy,
+        -1*shifts[2]*sz]
+    shift_index=0
+    result=""
+    for ch in og:
+        if ch in alpha:
+            idx=alpha.index(ch)
+            shift=signed_shifts[shift_index%3]
+            result+=alpha[(idx+shift)]
+            shift_index+=1
+    print(result)
         
 def decychoice(og):
-    keys={"Rome":caesarkey,"16":hexkey,"Gambit":chesskey,"4D":hcubekey}
+    keys={"Rome":caesarkey,"b16":hexkey,"Gambit":chesskey,"tesseract":hcubekey,"3dsect":octkey}
     choice=input("Enter key: ").strip()
     if choice in keys:
         return keys[choice](og)
     else:
         print("Invalid.")
     
+
